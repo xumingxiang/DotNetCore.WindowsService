@@ -24,10 +24,17 @@ namespace PeterKottas.DotNetCore.WindowsService.Example
         public void Start()
         {
             StartBase();
-            Timers.Start("Poller", 1000, () =>
+            //Timers.Start("Poller", 1000, () =>
+            //{
+            //    File.AppendAllText(fileName, string.Format("Polling at {0}\n", DateTime.Now.ToString("o")));
+            //});
+
+            Cronners.Start("Cronner", "0/1 * * * * ? * ", () =>
             {
-                File.AppendAllText(fileName, string.Format("Polling at {0}\n", DateTime.Now.ToString("o")));
+                Console.WriteLine(DateTimeOffset.UtcNow);
+              //  File.AppendAllText(fileName, string.Format("Polling at {0}\n", DateTime.Now.ToString("o")));
             });
+
             Console.WriteLine("I started");
             File.AppendAllText(fileName, "Started\n");
         }
